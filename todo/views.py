@@ -10,6 +10,7 @@ from django.views.generic import (
     DetailView,
     TemplateView,
     UpdateView,
+    DeleteView,
 )
 
 from .models import Project
@@ -80,5 +81,11 @@ class ProjectUpdateView(UpdateView):
         project.updated_at = timezone.now()
         project.save()
         return redirect('index')
+
+class ProjectDeleteView(DeleteView):
+    model = Project
+    fields = ('title', 'description',)
+    template_name = 'project_confirm_delete.html'
+    success_url = reverse_lazy('index')
 
 

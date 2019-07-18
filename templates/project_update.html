@@ -9,7 +9,7 @@
         Updated at: {{ object.updated_at }}
         {% csrf_token %}
         <br>
-        {{ form.as_p }}
+        <table>{{ form.title|attr:"class:form-control" }}</table>
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
 </div>

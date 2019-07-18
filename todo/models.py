@@ -17,6 +17,9 @@ class Project(models.Model):
     def get_update_url(self):
         return reverse('project-update', args=[self.pk])
 
+    def get_delete_url(self):
+        return reverse('project-delete', args=[self.pk])
+
 class Issue(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     title = models.CharField(max_length=50, verbose_name='Title')

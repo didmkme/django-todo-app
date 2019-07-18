@@ -34,6 +34,7 @@ urlpatterns = [
     #http://127.0.0.1:8000/projects/1/edit/
     path('<int:pk>/edit/', views.ProjectUpdateView.as_view(), name='project-update'),
 
+    path('<int:pk>/delete/', views.ProjectDeleteView.as_view(), name='project-delete'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
 ]
