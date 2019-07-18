@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ object.title }} Project</h1>
+
+    <form method="POST" class="project-detail">
+        Created at: {{ object.created_at }} / 
+        Updated at: {{ object.updated_at }}
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <p>Welcome {{ user.username }} 
+      {% if user.is_authenticated %}
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="dropdown-item" href="{% url 'index' %}">Projects</a>
+            <a class="dropdown-item" href="{% url 'project-create' %}">Add Project</a>
+        </li>
+      </ul>
+      {% endif %}
+{% else %}
+  <p>Welcome, you are not logged in</p>
+  </p> 
+{% endif %}
+{% endblock %}
