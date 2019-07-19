@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ issue.title }} Issue</h1>
+
+    <form method="POST" class="issue-detail">
+        Open date: {{ issue.open_date }} / 
+        Close date: {{ issue.close_date }}
+        <!-- <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_{{issue.id}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ issue.title }}
+        </a> -->
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>
+{% endblock %}

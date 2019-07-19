@@ -13,7 +13,7 @@ from django.views.generic import (
     DeleteView,
 )
 
-from .models import Project
+from .models import Project, Issue
 from todo.forms import ProjectForm
 
 class HomeView(TemplateView):
@@ -87,5 +87,3 @@ class ProjectDeleteView(DeleteView):
     fields = ('title', 'description',)
     template_name = 'project_confirm_delete.html'
     success_url = reverse_lazy('index')
-
-

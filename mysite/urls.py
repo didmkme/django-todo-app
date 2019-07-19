@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from todo import views
+from todo import views, issueviewsset
 
 urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
@@ -30,7 +30,16 @@ urlpatterns = [
 
     #http://127.0.0.1:8000/projects/1/
     path('<int:pk>/', views.ProjectDetailView.as_view(), name = 'project-detail'),
-    
+
+    #http://127.0.0.1:8000/projects/1/issue/
+    path('<int:pk>/issues/', issueviewsset.IssueIndexView.as_view(), name = 'issue-index'),
+
+    path('issues/<int:pk>/', issueviewsset.IssueDetailView.as_view(), name = 'issue-detail'),
+
+    path('<int:pk>/new/', issueviewsset.IssueCreateView.as_view(), name = 'issue-create'),
+
+    path('<int:pk>/edit/', issueviewsset.IssueUpdateView.as_view(), name = 'issue-update'),
+
     #http://127.0.0.1:8000/projects/1/edit/
     path('<int:pk>/edit/', views.ProjectUpdateView.as_view(), name='project-update'),
 

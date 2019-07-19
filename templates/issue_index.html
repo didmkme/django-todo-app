@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row medium-margin-top">
+    <div class="col-md-12">
+        <ul class="navbar-nav">
+            {% for issue in issues %}
+            <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_{{issue.id}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ issue.title }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown_{{issue.id}}">
+                        <a class="dropdown-item" href="{{ issue.get_absolute_url }}">Detail Issue</a>  
+                        <a class="dropdown-item" href="{{ issue.get_update_url }}">Update Issue</a>
+                        <a class="dropdown-item" href="{{ project.get_delete_url }}">Delete Isssue</a>   
+                    </div>
+                    <div class="dropdown-divider"></div>
+            </li>
+            {% endfor %}
+
+        </ul>
+    </div>
+</div>
+{% endblock %}

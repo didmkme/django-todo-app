@@ -6,6 +6,10 @@
     <form method="POST" class="project-detail">
         Created at: {{ object.created_at }} / 
         Updated at: {{ object.updated_at }}
+        <form method="POST" class="issue-create">
+            <a href="{% url 'issue-create' object.pk %}" class="btn btn-outline-secondary">Add Issue</a>
+            <a class="btn btn-outline-secondary" href="{% url 'issue-index' object.pk %}">Issue</a>        
+        </form> 
         {% csrf_token %}
         {{ form.as_p }}
     </form>
