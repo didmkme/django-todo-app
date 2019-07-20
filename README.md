@@ -3,19 +3,29 @@
 TODO application with Django that allows login users to create, edit, and delete project.
 
 ## Requirements
-- Download [Python](https://www.python.org/downloads/)
-- Download [Pip](https://pypi.org/project/pip/)
+- Download [Python](https://www.python.org/downloads/)  
+
+- Download [Pip](https://pypi.org/project/pip/)  
+
 - Create virtual environment    
+
 ```$ pip install virtualenv```  
 ```$ virtualenv venv```  
+
     Activate virtual environment:  
-		- On Windows: ``` $ venv/Scripts/activate ```    
+    
+		- On Windows: ``` $ venv/Scripts/activate ```   
+		
 		- On macOS and Linux: ``` $ source env/bin/activate ```  
+		
 - İnstall Django  
+
 ``` $ pip install Django ```  
 
 ## Features  
-- Requires user login 
+
+- Requires user login  
+
   - Sign up page
   
   ![signup](https://user-images.githubusercontent.com/25441621/61580503-ab6c9f00-ab1b-11e9-8267-a36491faf36d.PNG)
