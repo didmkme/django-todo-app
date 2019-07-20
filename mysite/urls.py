@@ -38,7 +38,9 @@ urlpatterns = [
 
     path('<int:pk>/new/', issueviewsset.IssueCreateView.as_view(), name = 'issue-create'),
 
-    path('<int:pk>/edit/', issueviewsset.IssueUpdateView.as_view(), name = 'issue-update'),
+    path('<int:pk>/update/', issueviewsset.IssueUpdateView.as_view(), name = 'issue-update'),
+
+    path('<int:pk>/erase/', issueviewsset.IssueDeleteView.as_view(), name = 'issue-delete'),
 
     #http://127.0.0.1:8000/projects/1/edit/
     path('<int:pk>/edit/', views.ProjectUpdateView.as_view(), name='project-update'),

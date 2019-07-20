@@ -1,6 +1,7 @@
 # pylint: disable=no-member
 from django.utils import timezone
 from django.shortcuts import render, redirect, reverse
+from django.urls import reverse_lazy
 
 from django.views.generic import (
     ListView,
@@ -55,13 +56,27 @@ class IssueCreateView(CreateView):
             return redirect(reverse('project-detail', kwargs={'pk':pk}))
         return render(request, 'issue_create.html', {'form':form})
 
-# class IssueUpdateView(UpdateView):
-#     model = Issue
-#     fields = ('title', 'open_date', 'close_date')
-#     template_name = 'issue_update.html'
+class IssueUpdateView(UpdateView):
+    model = Issue
+    fields = ('title', 'open_date', 'close_date')
+    template_name = 'issue_update.html'
 
-#     def form_valid(self, ):
-#         project = ProjectForm.save()
-#         project.updated_at = timezone.now()
-#         project.save()
-#         return redirect('index')
+    def post(self, request, pk):
+        form=IssueForm(request.POST)
+        if form.is_valid():
+            issue=Issue.objects.get(id=pk)
+            title=form.cleaned_data['title']
+            open_date=form.cleaned_data['open_date']
+            close_date=form.cleaned_data['close_date']
+            issue.title=title
+            issue.open_date=open_date
+            issue.close_date=close_date
+            issue.save()
+            return redirect(reverse('issue-detail', kwargs={'pk':pk}))
+        return render(request, 'issue_update.html', {'form':form})
+
+class IssueDeleteView(DeleteView):
+    model = Issue
+    fields = ('title', 'open_date', 'close_date')
+    template_name = 'issue_delete.html'
+    success_url = reverse_lazy('home')

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row medium-margin-top"></div>
+    <h1>{{ issue.title }} Issue</h1>
+    <form method="POST" class="issue-update">
+        {% csrf_token %}
+        <br>
+        <table>
+            {{ form.as_table }}</table>
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+</div>
+{% endblock %}

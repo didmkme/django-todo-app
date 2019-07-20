@@ -3,12 +3,12 @@
 {% block content %}
 
 <div class="row medium-margin-top"></div>
-    <h1>{{ object.title }} Project</h1>
-    <form method="POST" class="project-delete">
+    <h1>{{ issue.title }} Issue</h1>
+    <form method="POST" class="issue-delete">
         {% csrf_token %}
         <br>
         {{ form.as_p }}
-        <p>Are you sure you want to delete this project? {{ object }}</p>
+        <p>Are you sure you want to delete this issue? {{ issue }}</p>
         <button type="submit" class="delete btn btn-default">Yes</button>
     </form>
 </div>
