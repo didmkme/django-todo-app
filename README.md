@@ -21,7 +21,7 @@ TODO application with Django that allows login users to create, edit, and delete
 		
 - İnstall Django  
 
-``` $ pip install Django ```  
+	``` $ pip install Django ```  
 
 ## Features  
 
