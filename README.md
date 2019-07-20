@@ -9,10 +9,11 @@ TODO application with Django that allows login users to create, edit, and delete
 
 - Create virtual environment    
 
-```$ pip install virtualenv```  
+	```$ pip install virtualenv```  
 
-```$ virtualenv venv```  
-    Activate virtual environment:  
+	```$ virtualenv venv``` 
+	
+	Activate virtual environment:  
     
 		- On Windows: ``` $ venv/Scripts/activate ```   
 		
