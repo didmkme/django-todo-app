@@ -1,8 +1,12 @@
+# pylint: disable=no-member
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
 class Project(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=50, verbose_name='Title', blank=True)
     description = models.TextField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created at')

@@ -22,11 +22,11 @@ urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
     path('signup/', views.SignUpView.as_view(), name='signup'),
 
-    #http://127.0.0.1:8000/projects/
-    path('projects/', views.IndexView.as_view(), name='index'),
+    #http://127.0.0.1:8000/1/projects/
+    path('<int:pk>/projects/', views.IndexView.as_view(), name='index'),
 
     #http://127.0.0.1:8000/new/
-    path('new/', views.ProjectCreatView.as_view(), name = 'project-create'),
+    path('<int:pk>/create/', views.ProjectCreatView.as_view(), name = 'project-create'),
 
     #http://127.0.0.1:8000/projects/1/
     path('<int:pk>/', views.ProjectDetailView.as_view(), name = 'project-detail'),
@@ -46,6 +46,8 @@ urlpatterns = [
     path('<int:pk>/edit/', views.ProjectUpdateView.as_view(), name='project-update'),
 
     path('<int:pk>/delete/', views.ProjectDeleteView.as_view(), name='project-delete'),
+
     path('accounts/', include('django.contrib.auth.urls')),
+    
     path('admin/', admin.site.urls),
 ]

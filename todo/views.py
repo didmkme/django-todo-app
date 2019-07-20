@@ -1,8 +1,9 @@
 # pylint: disable=no-member
 from django.utils import timezone
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.forms import User, UserCreationForm
 from django.urls import reverse_lazy
+from django.contrib.auth import login
 
 from django.views.generic import (
     ListView,
@@ -20,22 +21,34 @@ class HomeView(TemplateView):
     template_name = 'home.html'
 
 class SignUpView(CreateView):
+    model = User
+    form_class = UserCreationForm
+    template_name = 'registration/signup.html'
 
-    def get(self, request):
-        form = UserCreationForm()
-        return render(request, 'registration/signup.html', {'form': form})
+    def get_context_data(self, **kwargs):
+        kwargs['project'] = 'user'
+        return super().get_context_data(**kwargs)
 
-    def post(self, request):
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-        return render(request, 'registration/signup.html', {'form':form})
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+
+    # def get(self, request):
+    #     form = UserCreationForm()
+    #     return render(request, 'registration/signup.html', {'form': form})
+
+    # def post(self, request):
+    #     form = UserCreationForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('home')
+    #     return render(request, 'registration/signup.html', {'form':form})
 
 class IndexView(ListView):
 
-    def get(self, request):
-        projects = Project.objects.all()
+    def get(self, request, pk):
+        projects = Project.objects.filter(user_id=pk)
         #import pdb;
         #pdb.set_trace()
         return render(request, 'index.html', {'projects': projects})
@@ -58,32 +71,39 @@ class ProjectDetailView(DetailView):
 
 class ProjectCreatView(CreateView):
 
-    def get(self, request):
+    def get(self, request, pk):
         form = ProjectForm()
         return render(request, 'project_form.html', {'form':form})
 
-    def post(self,request):
+    def post(self,request, pk):
         form = ProjectForm(request.POST)
         if form.is_valid():
             title = form.cleaned_data['title']
             description = form.cleaned_data['description']
-            Project.objects.create(title=title, description=description)
-            return redirect('index')
+            user = User.objects.get(id=pk)
+            Project.objects.create(user=user, title=title, description=description)
+            return redirect(reverse('index', kwargs={'pk':pk}))
         return render(request, 'project_form.html', {'form':form})
 
 class ProjectUpdateView(UpdateView):
     model = Project
-    fields = ('title', 'description',)
+    fields = ('title', 'description')
     template_name = 'project_update.html'
 
-    def form_valid(self, ProjectForm):
-        project = ProjectForm.save()
-        project.updated_at = timezone.now()
-        project.save()
-        return redirect('index')
+    def post(self, request, pk):
+        form=ProjectForm(request.POST)
+        if form.is_valid():
+            project=Project.objects.get(id=pk)
+            title=form.cleaned_data['title']
+            description=form.cleaned_data['description']
+            project.title=title
+            project.description=description
+            project.save()
+            return redirect(reverse('project-detail', kwargs={'pk':pk}))
+        return render(request, 'project_update.html', {'form':form})
 
 class ProjectDeleteView(DeleteView):
     model = Project
     fields = ('title', 'description',)
     template_name = 'project_confirm_delete.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('home')

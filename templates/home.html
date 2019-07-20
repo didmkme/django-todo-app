@@ -8,8 +8,8 @@
       {% if user.is_authenticated %}
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
-          <a class="dropdown-item" href="{% url 'index' %}">Projects</a>
-            <a class="dropdown-item" href="{% url 'project-create' %}">Add Project</a>
+          <a class="dropdown-item" href="{% url 'index' user.pk %}">Projects</a>
+            <a class="dropdown-item" href="{% url 'project-create' user.pk %}">Add Project</a>
         </li>
       </ul>
       {% endif %}
