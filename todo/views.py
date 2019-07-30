@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.forms import User, UserCreationForm
 from django.urls import reverse_lazy
 from django.contrib.auth import login
+from django.views.generic.edit import FormMixin
 
 from django.views.generic import (
     ListView,
@@ -14,7 +15,7 @@ from django.views.generic import (
     DeleteView,
 )
 
-from .models import Project, Issue
+from .models import Project, Issue, Profile
 from todo.forms import ProjectForm
 
 class HomeView(TemplateView):
@@ -31,6 +32,8 @@ class SignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
+        user.save()
+        Profile.objects.create(user=user)
         login(self.request, user)
         return redirect('home')
 
@@ -53,22 +56,6 @@ class IndexView(ListView):
         #pdb.set_trace()
         return render(request, 'index.html', {'projects': projects})
 
-class ProjectDetailView(DetailView):
-    model = Project
-    template_name = 'project_detail.html'
-
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        context = self.get_context_data(object=self.object)
-        data={
-            'title':self.object.title, 
-            'description':self.object.description, 
-            'updated_at':self.object.updated_at, 
-            'created_at':self.object.created_at,
-        }
-        context['form']=ProjectForm(data)
-        return self.render_to_response(context)
-
 class ProjectCreatView(CreateView):
 
     def get(self, request, pk):
@@ -84,6 +71,22 @@ class ProjectCreatView(CreateView):
             Project.objects.create(user=user, title=title, description=description)
             return redirect(reverse('index', kwargs={'pk':pk}))
         return render(request, 'project_form.html', {'form':form})
+
+class ProjectDetailView(DetailView):
+    model = Project
+    template_name = 'project_detail.html'
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        data={
+            'title':self.object.title, 
+            'description':self.object.description, 
+            'updated_at':self.object.updated_at, 
+            'created_at':self.object.created_at,
+        }
+        context['form']=ProjectForm(data)
+        return self.render_to_response(context)
 
 class ProjectUpdateView(UpdateView):
     model = Project

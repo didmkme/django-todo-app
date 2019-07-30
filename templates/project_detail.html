@@ -2,7 +2,6 @@
 
 {% block content %}
     <h1>{{ object.title }} Project</h1>
-
     <form method="POST" class="project-detail">
         Created at: {{ object.created_at }} / 
         Updated at: {{ object.updated_at }}
@@ -12,5 +11,6 @@
         </form> 
         {% csrf_token %}
         {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
     </form>
 {% endblock %}

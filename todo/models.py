@@ -5,6 +5,18 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+class Profile(models.Model):
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    age=models.PositiveIntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name='Profile'
+        verbose_name_plural='Profiles'
+        
+
 class Project(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=50, verbose_name='Title', blank=True)

@@ -48,6 +48,8 @@ urlpatterns = [
     path('<int:pk>/delete/', views.ProjectDeleteView.as_view(), name='project-delete'),
 
     path('accounts/', include('django.contrib.auth.urls')),
+
+    path('accounts/edit', include('django.contrib.auth.urls')),
     
     path('admin/', admin.site.urls),
 ]
